@@ -1,0 +1,117 @@
+{
+  "name": "Resize shape",
+  "description": "Plugins to select and deselect shapes",
+  "author": "David Williames",
+  "homepage": "http://github.com/example/sketchplugins",
+  "version": 1.0,
+  "identifier": "com.davidwilliames.expand-sketch-plugin",
+  "updateURL": "https://github.com/downloads/example/sketchplugins/sketchplugins.json",
+  "compatibleVersion": 37,
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "name": "Expand vertically",
+      "identifier": "increaseVertically",
+      "shortcut": "alt ↓",
+      "script": "main.js",
+      "handler": "increaseVertically"
+    },
+    {
+      "name": "Expand vertically—Large",
+      "identifier": "increaseVerticallyLarge",
+      "shortcut": "alt shift ↓",
+      "script": "main.js",
+      "handler": "increaseVerticallyLarge"
+    },
+    {
+      "name": "Compress vertically",
+      "identifier": "decreaseVertically",
+      "shortcut": "alt ↑",
+      "script": "main.js",
+      "handler": "decreaseVertically"
+    },
+    {
+      "name": "Compress vertically—Large",
+      "identifier": "decreaseVerticallyLarge",
+      "shortcut": "alt shift ↑",
+      "script": "main.js",
+      "handler": "decreaseVerticallyLarge"
+    },
+    {
+      "name": "Expand horizontally",
+      "identifier": "increaseHorizontally",
+      "shortcut": "alt →",
+      "script": "main.js",
+      "handler": "increaseHorizontally"
+    },
+    {
+      "name": "Expand horizontally—Large",
+      "identifier": "increaseHorizontallyLarge",
+      "shortcut": "alt shift →",
+      "script": "main.js",
+      "handler": "increaseHorizontallyLarge"
+    },
+    {
+      "name": "Compress horizontally",
+      "identifier": "decreaseHorizontally",
+      "shortcut": "alt ←",
+      "script": "main.js",
+      "handler": "decreaseHorizontally"
+    },
+    {
+      "name": "Compress horizontally—Large",
+      "identifier": "decreaseHorizontallyLarge",
+      "shortcut": "alt shift ←",
+      "script": "main.js",
+      "handler": "decreaseHorizontallyLarge"
+    },
+
+    {
+      "name": "Increase corner radius",
+      "identifier": "increaseRadius",
+      "shortcut": "cmd ]",
+      "script": "main.js",
+      "handler": "increaseRadius"
+    },
+    {
+      "name": "Increase corner radius—Large",
+      "identifier": "increaseRadiusLarge",
+      "shortcut": "cmd shift ]",
+      "script": "main.js",
+      "handler": "increaseRadiusLarge"
+    },
+    {
+      "name": "Decrease corner radius",
+      "identifier": "decreaseRadius",
+      "shortcut": "cmd [",
+      "script": "main.js",
+      "handler": "decreaseRadius"
+    },
+    {
+      "name": "Decrease corner radius—Large",
+      "identifier": "decreaseRadiusLarge",
+      "shortcut": "cmd shift [",
+      "script": "main.js",
+      "handler": "decreaseRadiusLarge"
+    }
+  ],
+  "menu": {
+    "items": [
+      "increaseVertically",
+      "increaseHorizontally",
+      "decreaseVertically",
+      "decreaseHorizontally",
+      "-",
+      "increaseVerticallyLarge",
+      "increaseHorizontallyLarge",
+      "decreaseVerticallyLarge",
+      "decreaseHorizontallyLarge",
+      "-",
+      "increaseRadius",
+      "decreaseRadius",
+      "-",
+      "increaseRadiusLarge",
+      "decreaseRadiusLarge"
+    ]
+  }
+}
