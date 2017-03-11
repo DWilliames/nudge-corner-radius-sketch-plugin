@@ -1,71 +1,21 @@
 
 var selection
 var doc
+var smallNudge // Based on the user's settings — typical 'move' amount
+var largeNudge // Based on the user's settings — typical 'shift + move' amount
+var radiusSeparator // Used for separating a specific radius to each corner
 
-var smallNudge
-var largeNudge
-
+// Setup variables based on the context
 function setup(context) {
   doc = context.document
   selection = context.selection
-
+  // Get the values from the 'User Defaults'
+  // Visible at '~/Library/Preferences/com.bohemiancoding.sketch3.plist'
   smallNudge = NSUserDefaults.standardUserDefaults().integerForKey('nudgeDistanceSmall')
   largeNudge = NSUserDefaults.standardUserDefaults().integerForKey('nudgeDistanceBig')
-}
 
-function increaseVertically(context) {
-  setup(context)
-  changeSize(0, smallNudge)
-}
-
-function decreaseVertically(context) {
-  setup(context)
-  changeSize(0, -smallNudge)
-}
-
-function increaseVerticallyLarge(context) {
-  setup(context)
-  changeSize(0, largeNudge)
-}
-
-function decreaseVerticallyLarge(context) {
-  setup(context)
-  changeSize(0, -largeNudge)
-}
-
-function increaseHorizontally(context) {
-  setup(context)
-  changeSize(smallNudge, 0)
-}
-
-function decreaseHorizontally(context) {
-  setup(context)
-  changeSize(-smallNudge, 0)
-}
-
-function increaseHorizontallyLarge(context) {
-  setup(context)
-  changeSize(largeNudge, 0)
-}
-
-function decreaseHorizontallyLarge(context) {
-  setup(context)
-  changeSize(-largeNudge, 0)
-}
-
-
-function changeSize(x, y) {
-  selection.forEach(layer => {
-    layer.setConstrainProportions(false)
-
-    var frame = layer.frame()
-    frame.setX(frame.x() - x)
-    frame.setY(frame.y() - y)
-    frame.setWidth(frame.width() + 2 * x)
-    frame.setHeight(frame.height() + 2 * y)
-  })
-
-  doc.reloadInspector()
+  // Set the separator based on the Sketch version
+  radiusSeparator = (sketchVersionNumber() < 420) ? '/' : ';'
 }
 
 
@@ -75,22 +25,66 @@ function changeSize(x, y) {
 
 function increaseRadius(context) {
   setup(context)
-  changeCornerRadius(smallNudge)
+  updateRadius(smallNudge, "Align right")
 }
 
 function decreaseRadius(context) {
   setup(context)
-  changeCornerRadius(-smallNudge)
+  updateRadius(-smallNudge, "Align left")
 }
 
 function increaseRadiusLarge(context) {
   setup(context)
-  changeCornerRadius(largeNudge)
+  updateRadius(largeNudge, "Show Next Tab")
 }
 
 function decreaseRadiusLarge(context) {
   setup(context)
-  changeCornerRadius(-largeNudge)
+  updateRadius(-largeNudge, "Show Previous Tab")
+}
+
+
+// ****************************
+//   Helper functions
+// ****************************
+
+function updateRadius(change, alternateMenuItem) {
+  if (validSelection()) {
+    changeCornerRadius(change)
+  } else {
+    performMenuItem(alternateMenuItem)
+  }
+}
+
+function validSelection() {
+  return selection.count() > 0 && selection.every(layer => {
+    return layer.isKindOfClass(MSShapeGroup) || layer.isKindOfClass(MSShapePathLayer)
+  })
+}
+
+function performMenuItem(menuName) {
+  var menu = NSApplication.sharedApplication().mainMenu()
+  menu.update()
+
+  var menuItems = NSApplication.sharedApplication().mainMenu().itemArray()
+  menuItems.forEach(item => {
+    item.menu().update()
+    item.submenu().itemArray().some(subItem => {
+      if (subItem.title().toLowerCase() == menuName.toLowerCase()) {
+        NSApp.sendAction_to_from(subItem.action(), subItem.target(), subItem)
+        return true
+      }
+    })
+  })
+}
+
+function sketchVersionNumber() {
+  var version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString")
+  var versionNumber = version.stringByReplacingOccurrencesOfString_withString(".", "") + ""
+  while(versionNumber.length != 3) {
+    versionNumber += "0"
+  }
+  return parseInt(versionNumber)
 }
 
 
@@ -109,15 +103,15 @@ function changeCornerRadius(change) {
         if(shape.isKindOfClass(MSRectangleShape)) {
 
           // An array of each corner radius
-          var radii = shape.cornerRadiusString().split(';')
+          var radii = shape.cornerRadiusString().split(radiusSeparator)
           // Update each radius by the change amount
           radii = radii.map(radius => {
-            var newRadius = parseInt(radius) + change
+            var newRadius = parseFloat(radius) + change
             return Math.max(newRadius, 0) // Minimum value is '0'
           })
 
           // Set the radius by setting the string, separated by ';'
-          shape.setCornerRadiusFromComponents(radii.join(';'))
+          shape.setCornerRadiusFromComponents(radii.join(radiusSeparator))
         }
       })
     }
@@ -125,8 +119,8 @@ function changeCornerRadius(change) {
     // If the shape is being edited — update based on the selected points
     var handler = doc.eventHandlerManager().currentHandler()
     if (layer.isKindOfClass(MSShapePathLayer) && handler.isKindOfClass(MSShapeEventHandler)) {
-
       var points = layer.path().points()
+      // Update the radius for each of the selected point's
       handler.indexPathsForSelectedHandles().forEach(indexPath => {
         var point = points[indexPath.item()]
         // Only update the point's radius, if it is a 'straight' curve point
