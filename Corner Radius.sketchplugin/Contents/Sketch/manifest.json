@@ -1,11 +1,11 @@
 {
-  "name": "Corner Radius",
+  "name": "Nudge Corner Radius",
   "description": "Change the corner radius of a shape through quick keyboard shortcuts",
   "author": "David Williames",
   "homepage": "https://github.com/DWilliames/nudge-corner-radius",
   "version": 1.0,
   "identifier": "com.davidwilliames.corner-radius-sketch-plugin",
-  "compatibleVersion": 37,
+  "compatibleVersion": 39,
   "bundleVersion": 1,
   "commands": [
     {
@@ -13,28 +13,36 @@
       "identifier": "increaseRadius",
       "shortcut": "cmd ]",
       "script": "main.js",
-      "handler": "increaseRadius"
+      "handler": "increaseRadius",
+      "icon": "icons\/increaseRadius.png",
+      "description": "Increase the corner radius of selected layers."
     },
     {
       "name": "Increase corner radius (large nudge)",
       "identifier": "increaseRadiusLarge",
       "shortcut": "cmd shift ]",
       "script": "main.js",
-      "handler": "increaseRadiusLarge"
+      "handler": "increaseRadiusLarge",
+      "icon": "icons\/increaseRadiusLarge.png",
+      "description": "Increase the corner radius of selected layers."
     },
     {
       "name": "Decrease corner radius",
       "identifier": "decreaseRadius",
       "shortcut": "cmd [",
       "script": "main.js",
-      "handler": "decreaseRadius"
+      "handler": "decreaseRadius",
+      "icon": "icons\/decreaseRadius.png",
+      "description": "Decrease the corner radius of selected layers."
     },
     {
       "name": "Decrease corner radius (large nudge)",
       "identifier": "decreaseRadiusLarge",
       "shortcut": "cmd shift [",
       "script": "main.js",
-      "handler": "decreaseRadiusLarge"
+      "handler": "decreaseRadiusLarge",
+      "icon": "icons\/decreaseRadiusLarge.png",
+      "description": "Decrease the corner radius of selected layers."
     }
   ],
   "menu": {

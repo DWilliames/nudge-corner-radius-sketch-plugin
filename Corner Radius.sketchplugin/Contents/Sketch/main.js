@@ -48,28 +48,37 @@ function decreaseRadiusLarge(context) {
 //   Helper functions
 // ****************************
 
+
+// Update the radius by 'change'
 function updateRadius(change, alternateMenuItem) {
   if (validSelection()) {
     changeCornerRadius(change)
   } else {
+    // If the selection is not valid — perform the fallback menu item
     performMenuItem(alternateMenuItem)
   }
 }
 
+// Is the selection valid?
+// Yes, if every selected layer is a Shape or ShapePath
 function validSelection() {
   return selection.count() > 0 && selection.every(layer => {
     return layer.isKindOfClass(MSShapeGroup) || layer.isKindOfClass(MSShapePathLayer)
   })
 }
 
+// Perform the Menu Item — based on it's name
 function performMenuItem(menuName) {
+  // Update the menu before we look through it
   var menu = NSApplication.sharedApplication().mainMenu()
   menu.update()
 
   var menuItems = NSApplication.sharedApplication().mainMenu().itemArray()
+  // Look through each of the mainMeny items — we won't check if these match yet
   menuItems.forEach(item => {
     item.menu().update()
     item.submenu().itemArray().some(subItem => {
+      // For each submenu within that, if it's a match, perform it's action end finish
       if (subItem.title().toLowerCase() == menuName.toLowerCase()) {
         NSApp.sendAction_to_from(subItem.action(), subItem.target(), subItem)
         return true
@@ -78,6 +87,8 @@ function performMenuItem(menuName) {
   })
 }
 
+// Return the version number for sketch — turned into a single integer
+// e.g. '3.8.5' => 385, '40.2' => 402
 function sketchVersionNumber() {
   var version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString")
   var versionNumber = version.stringByReplacingOccurrencesOfString_withString(".", "") + ""

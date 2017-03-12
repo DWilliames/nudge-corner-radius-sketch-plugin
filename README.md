@@ -16,11 +16,9 @@ Sketch Plugin to quickly change the corner radius of a layer through easy keyboa
 
 <kbd>⌘ command</kbd> + <kbd>[</kbd> = Decrease corner radius
 
-![](images/gifs/expandHorizontally.gif)
-![Condense layer size horizontally](images/gifs/condenseHorizontally.gif)
+![Nudge Corner Radius Preview](images/nudge-radius-preview.gif)
 
 **Note: Add <kbd>⇧ Shift</kbd> to increase the nudge size**
-
 
 The amount the corner radius changes by is based on the user's nudge size:
 
@@ -33,7 +31,7 @@ This means that if you change your settings with [nudg.it](http://nudg.it), it w
 ## Why make this plugin? How is it different?
 
 Sometimes using keyboard shortcut are much easy than manipulating sliders with the mouse.
-Even if the values of the layer's corner radius differ — this plugin will respect that. e.g. 5;10;20;10
+Even if the values of the layer's corner radius differ — this plugin will respect that. e.g. `5;10;20;10`
 
 When editing any shape layer, the shortcut also works for nodes that have been selected!
 
