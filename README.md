@@ -25,13 +25,13 @@ The amount the corner radius changes by is based on the user's nudge size:
 - default = 1
 - default large (shift) = 10
 
-This means that if you change your settings with [nudg.it](http://nudg.it), it will respect this preference.
+This means that if you change your settings with something like [nudg.it](http://nudg.it), it will respect this preference.
 
 
 ## Why make this plugin? How is it different?
 
-Sometimes using keyboard shortcut are much easy than manipulating sliders with the mouse.
-Even if the values of the layer's corner radius differ — this plugin will respect that. e.g. `5;10;20;10`
+Sometimes using keyboard shortcuts are much easier than manipulating sliders with the mouse.
+Even if the values of the layer's corner radii differ — this plugin will respect that. e.g. `5;10;20;10`
 
 When editing any shape layer, the shortcut also works for nodes that have been selected!
 
@@ -44,7 +44,7 @@ Yes that's correct. If you didn't know — <kbd>⌘ command</kbd> + <kbd>⇧ shi
 Also, <kbd>⌘ command</kbd> + <kbd>[</kbd> will left align text, and <kbd>⌘ command</kbd> + <kbd>]</kbd> to right align.
 
 The cool thing is, these keyboard shortcuts will still work — as long as a shape layer isn't selected.
-It's basically contextually aware — like skynet. 🤖
+It's basically contextually aware. 🤖
 
 
 ## Installation
