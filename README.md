@@ -49,7 +49,7 @@ It's basically contextually aware. 🤖
 
 ## Installation
 
-1. [Download the plugin](https://github.com/DWilliames/nudge-corner-radius/releases/download/v1.0/Nudge.Resize.sketchplugin.zip)
+1. [Download the plugin](https://github.com/DWilliames/nudge-corner-radius-sketch-plugin/releases/download/v1.0/Corner.Radius.sketchplugin.zip)
 2. Double-click the file, 'Nudge Corner Radius.sketchplugin'
 3. That's it...
 
