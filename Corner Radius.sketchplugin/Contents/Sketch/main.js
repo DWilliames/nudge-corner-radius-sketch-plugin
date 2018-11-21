@@ -108,34 +108,26 @@ function sketchVersionNumber() {
 function changeCornerRadius(change) {
   // Update the corner radius for each selected element
   selection.forEach(layer => {
-    if (layer.isKindOfClass(MSShapeGroup)) {
-      layer.layers().forEach(shape => {
-        // Update the corner radius if it's a rectangle shape
-        if(shape.isKindOfClass(MSRectangleShape)) {
 
-          // An array of each corner radius
-          var radii = shape.cornerRadiusString().split(radiusSeparator)
-          // Update each radius by the change amount
-          radii = radii.map(radius => {
-            var newRadius = parseFloat(radius) + change
-            return Math.max(newRadius, 0) // Minimum value is '0'
-          })
-
-          // Set the radius by setting the string, separated by ';'
-          shape.setCornerRadiusFromComponents(radii.join(radiusSeparator))
-        }
-      })
-    }
-
-    // If the shape is being edited — update based on the selected points
     var handler = doc.eventHandlerManager().currentHandler()
-    if (layer.isKindOfClass(MSShapePathLayer) && handler.isKindOfClass(MSShapeEventHandler)) {
-      var points = layer.path().points()
-      // Update the radius for each of the selected point's
-      handler.indexPathsForSelectedHandles().forEach(indexPath => {
-        var point = points[indexPath.item()]
-        // Only update the point's radius, if it is a 'straight' curve point
-        if (point.currentBehaviour() == MSCurvePointStraightBehaviour) {
+
+    // Offset the corners on the layer, if we're selecting it, and not editing it
+    if (handler.isKindOfClass(MSNormalEventHandler)) {
+      // If before Sketch 52 – check the shape layers of the selection
+      // If Sketch 52+, the user may be selecting the Rectangle shape directly
+      if (sketchVersionNumber() < 520) {
+        if (layer.isKindOfClass(MSShapeGroup)) {
+          layer.layers().forEach(shape => {
+            offsetCornerRadiusForLayer(change, shape)
+          })
+        }
+      } else {
+        offsetCornerRadiusForLayer(change, layer)
+      }
+    } else if (handler.isKindOfClass(MSShapeEventHandler) && layer.isKindOfClass(MSShapePathLayer)) {
+      // If the shape is being edited — update based on the selected points
+      handler.pathController().selectedObjects().forEach(point => {
+        if (point.isKindOfClass(MSCurvePoint) && point.currentBehaviour() == MSCurvePointStraightBehaviour) {
           var newRadius = Math.max(point.cornerRadius() + change, 0) // Minimum value is '0'
           point.setCornerRadius(newRadius)
         }
@@ -145,4 +137,23 @@ function changeCornerRadius(change) {
 
   // Refresh the inspector so that the radius text field is up to date
   doc.reloadInspector()
+}
+
+
+function offsetCornerRadiusForLayer(offset, layer) {
+  // Can only do it if the layer is a Rectangle
+  if (!layer.isKindOfClass(MSRectangleShape)) {
+    return
+  }
+
+  // An array of each corner radius
+  var radii = layer.cornerRadiusString().split(radiusSeparator)
+  // Update each radius by the change amount
+  radii = radii.map(radius => {
+    var newRadius = parseFloat(radius) + offset
+    return Math.max(newRadius, 0) // Minimum value is '0'
+  })
+
+  // Set the radius by setting the string, separated by ';'
+  layer.setCornerRadiusFromComponents(radii.join(radiusSeparator))
 }

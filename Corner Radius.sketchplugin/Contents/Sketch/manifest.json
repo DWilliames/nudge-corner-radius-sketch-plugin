@@ -2,11 +2,13 @@
   "name": "Nudge Corner Radius",
   "description": "Change the corner radius of a shape through quick keyboard shortcuts",
   "author": "David Williames",
-  "homepage": "https://github.com/DWilliames/nudge-corner-radius",
-  "version": 1.0,
+  "homepage": "https://github.com/DWilliames/nudge-corner-radius-sketch-plugin",
+  "version": 1.1,
+  "appcast": "https://raw.githubusercontent.com/DWilliames/nudge-corner-radius-sketch-plugin/master/.appcast.xml",
   "identifier": "com.davidwilliames.corner-radius-sketch-plugin",
   "compatibleVersion": 39,
   "bundleVersion": 1,
+  "icon": "Icons\/increaseRadius.png",
   "commands": [
     {
       "name": "Increase corner radius",

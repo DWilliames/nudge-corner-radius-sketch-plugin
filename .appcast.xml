@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Nudge Corner Radius</title>
+    <link>https://raw.githubusercontent.com/DWilliames/nudge-corner-radius-sketch-plugin/master/.appcast.xml</link>
+    <description>Change the corner radius of a shape through quick keyboard shortcuts</description>
+    <language>en</language>
+    <item>
+      <title>Version 1.1</title>
+      <description>Squashed some more bugs</description>
+      <enclosure url="https://github.com/DWilliames/paddy-sketch-plugin/releases/download/v1.1/Corner.Radius.sketchplugin.zip" sparkle:version="1.1" />
+    </item>
+  </channel>
+</rss>
